@@ -12,11 +12,11 @@ rtt=`echo $pingresult | grep 'rtt' | awk -F'/' '{ print $6}' | awk '{ print $1}'
 
 if [ ${packetloss//[-%]/} -ge $4 ]
 then
-	echo "CRITICAL - Packetloss is $packetloss | rta=$rtt pl=$packetloss"
+	echo "CRITICAL - Host $1 packetloss is $packetloss | rta=$rtt pl=$packetloss"
 	exit 2
 elif [ ${packetloss//[-%]/} -ge $3 ]
 then
-	echo "WARNING - rta is $rtt ms | rta=$rtt pl=$packetloss"
+	echo "WARNING - Host $1 rta is $rtt ms | rta=$rtt pl=$packetloss"
         exit 1
 fi
 
@@ -27,13 +27,13 @@ rtt_warn=$(awk 'BEGIN{ print "'$rtt'">="'$5'" }')
 
 if [ $rtt_crit -eq 1 ]
 then
-	echo "CRITICAL - rta is $rtt | rta=$rtt pl=$packetloss"
+	echo "CRITICAL - Host $1 rta is $rtt | rta=$rtt pl=$packetloss"
         exit 2
 elif [ $rtt_warn -eq 1 ]
 then
-	echo "WARNING - rta is $rtt | rta=$rtt pl=$packetloss"
+	echo "WARNING - Host $1 rta is $rtt | rta=$rtt pl=$packetloss"
         exit 1
 else
-        echo "OK - rta $rtt ms, packetloss $packetloss | rta=$rtt pl=$packetloss"
+        echo "OK - Host $1 rta $rtt ms, packetloss $packetloss | rta=$rtt pl=$packetloss"
         exit 0
 fi
